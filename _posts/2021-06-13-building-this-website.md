@@ -1,7 +1,7 @@
 ---
 layout: post
-title: Building this website
-author: Example Author
+title: Creating the site
+author: Shiv
 ---
 
 # Welcome to the new post
