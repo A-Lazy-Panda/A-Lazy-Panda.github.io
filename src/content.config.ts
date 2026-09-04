@@ -14,6 +14,7 @@ const pitches = defineCollection({
     recommendation: z.enum(['Long', 'Short', 'Hold', 'Watch']).optional(),
     status: z.enum(['published', 'draft']).default('published'),
     pdf: z.string().optional(), // e.g. /pitches/APR.pdf
+    cover: z.string().optional(), // e.g. /pitches/img/apr/cover.png
     tags: z.array(z.string()).default([]),
     order: z.number().default(0),
   }),

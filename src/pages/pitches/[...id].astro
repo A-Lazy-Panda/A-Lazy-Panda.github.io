@@ -14,18 +14,37 @@ const badgeClass = (r?: string) => 'badge badge--' + (r ?? 'watch').toLowerCase(
 ---
 <Base title={`${d.company} (${d.ticker})`} description={d.thesis}>
   <p><a class="back-link" href="/pitches">← All pitches</a></p>
-  <div class="article-head">
-    <div class="card__meta" style="font-size:.9rem">
-      <span class="card__ticker" style="font-size:1rem">{d.ticker}</span>
-      {d.exchange && <span class="faint">{d.exchange}</span>}
-      {d.recommendation && <span class={badgeClass(d.recommendation)}>{d.recommendation}</span>}
-      {d.sector && <span class="tag">{d.sector}</span>}
+
+  {d.cover && (
+    <div class="pitch-hero">
+      <div class="pitch-hero__img" style={`background-image:url('${d.cover}')`}></div>
+      <div class="pitch-hero__cap">
+        <div class="pcard__meta" style="margin-bottom:.3rem">
+          <span class="pcard__ticker" style="font-size:1rem">{d.ticker}</span>
+          {d.exchange && <span style="font-size:.82rem;color:rgba(255,255,255,.72)">{d.exchange}</span>}
+          {d.recommendation && <span class={'pcard__rec pcard__rec--' + d.recommendation.toLowerCase()}>{d.recommendation}</span>}
+        </div>
+        <h1 style="color:#fff;font-size:clamp(1.9rem,4vw,2.6rem)">{d.company}</h1>
+      </div>
     </div>
-    <h1>{d.company}</h1>
-    <p class="lead" style="font-size:1.1rem">{d.thesis}</p>
+  )}
+
+  <div class="article-head">
+    {!d.cover && (
+      <>
+        <div class="card__meta" style="font-size:.9rem">
+          <span class="card__ticker" style="font-size:1rem">{d.ticker}</span>
+          {d.exchange && <span class="faint">{d.exchange}</span>}
+          {d.recommendation && <span class={badgeClass(d.recommendation)}>{d.recommendation}</span>}
+        </div>
+        <h1>{d.company}</h1>
+      </>
+    )}
+    <p class="lead" style="font-size:1.15rem">{d.thesis}</p>
     <div class="article-meta">
       <span>{fmt(d.date)}</span>
-      {d.pdf && (<><span class="dot">·</span><a class="link" href={d.pdf} target="_blank" rel="noopener">Download the full pitch (PDF)</a></>)}
+      {d.sector && (<><span class="dot">·</span><span>{d.sector}</span></>)}
+      {d.pdf && (<><span class="dot">·</span><a class="link" href={d.pdf} target="_blank" rel="noopener">Full deck (PDF)</a></>)}
     </div>
   </div>
 
@@ -33,14 +52,7 @@ const badgeClass = (r?: string) => 'badge badge--' + (r ?? 'watch').toLowerCase(
     <Content />
   </article>
 
-  {d.pdf && (
-    <section style="margin-top:2.5rem">
-      <h2 style="font-size:1.25rem; margin-bottom:.75rem">Full deck</h2>
-      <object class="doc-embed" data={d.pdf} type="application/pdf">
-        <p class="muted">Your browser can't display the PDF inline. <a class="link" href={d.pdf}>Open it here.</a></p>
-      </object>
-    </section>
-  )}
-
-  <p class="faint small" style="margin-top:2.5rem">For information and discussion only. Not investment advice, not a recommendation, and not a solicitation. Figures are tagged [R] reported, [C] calculated, [E] estimate, [U] unverified.</p>
+  <p class="faint small" style="margin-top:2.75rem; border-top:1px solid var(--border); padding-top:1.25rem">
+    For information and discussion only. Not investment advice, not a recommendation, and not a solicitation. Figures are tagged [R] reported, [C] calculated, [E] estimate, [U] unverified; check them against primary sources before you rely on any of them.
+  </p>
 </Base>

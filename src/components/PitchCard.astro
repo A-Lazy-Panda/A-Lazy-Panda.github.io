@@ -1,0 +1,21 @@
+---
+// Image-forward pitch card: cover image, gradient overlay, text at the bottom.
+interface Props { entry: any; }
+const { entry } = Astro.props;
+const d = entry.data;
+const fmt = (x: Date) => x.toLocaleDateString('en-GB', { year: 'numeric', month: 'short' });
+const badgeClass = (r?: string) => 'pcard__rec pcard__rec--' + (r ?? 'watch').toLowerCase();
+---
+<a class="pcard" href={`/pitches/${entry.id}`} style={d.cover ? `--cover:url('${d.cover}')` : ''}>
+  <div class="pcard__img"></div>
+  <div class="pcard__body">
+    <div class="pcard__meta">
+      <span class="pcard__ticker">{d.ticker}</span>
+      {d.recommendation && <span class={badgeClass(d.recommendation)}>{d.recommendation}</span>}
+      <span class="pcard__date">{fmt(d.date)}</span>
+    </div>
+    <h3 class="pcard__title">{d.company}</h3>
+    <p class="pcard__thesis">{d.thesis}</p>
+    <span class="pcard__more">Read the pitch →</span>
+  </div>
+</a>

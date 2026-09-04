@@ -333,3 +333,56 @@ a.card:hover { border-color: var(--border-strong); box-shadow: var(--shadow); tr
   background: var(--border-strong); cursor: pointer; transition: background .15s, transform .15s;
 }
 .car__dot[aria-current='true'] { background: var(--accent); transform: scale(1.15); }
+
+/* ---- Image-forward pitch card (Gallery4 style) ------------------------ */
+.pcard {
+  position: relative; display: block; overflow: hidden;
+  border-radius: 14px; min-height: 25rem; height: 100%;
+  background: var(--surface-2); border: 1px solid var(--border);
+  isolation: isolate;
+}
+.pcard__img {
+  position: absolute; inset: 0;
+  background-image: var(--cover, linear-gradient(160deg, var(--accent), var(--accent-2)));
+  background-size: cover; background-position: center;
+  transition: transform .5s ease;
+}
+.pcard:hover .pcard__img { transform: scale(1.05); }
+.pcard::after {
+  content: ''; position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(180deg, rgba(15,10,14,0) 25%, rgba(15,10,14,.45) 55%, rgba(15,10,14,.88) 100%);
+}
+.pcard__body {
+  position: absolute; inset-inline: 0; bottom: 0; z-index: 2;
+  padding: 1.4rem 1.5rem; color: #fff;
+}
+.pcard__meta { display: flex; align-items: center; gap: .55rem; margin-bottom: .5rem; }
+.pcard__ticker { font-family: var(--font-mono); font-weight: 600; letter-spacing: .03em; color: #fff; font-size: .9rem; }
+.pcard__date { margin-left: auto; font-size: .8rem; color: rgba(255,255,255,.72); font-variant-numeric: tabular-nums; }
+.pcard__rec { font-size: .64rem; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; padding: .16rem .5rem; border-radius: 5px; background: rgba(255,255,255,.16); color: #fff; }
+.pcard__rec--long { background: rgba(90,200,140,.28); }
+.pcard__rec--short { background: rgba(230,120,120,.3); }
+.pcard__title { font-family: var(--font-serif); font-size: 1.5rem; line-height: 1.15; color: #fff; margin-bottom: .4rem; }
+.pcard__thesis { font-size: .92rem; color: rgba(255,255,255,.82); line-height: 1.45; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.pcard__more { display: inline-block; margin-top: .8rem; font-size: .85rem; font-weight: 550; color: #fff; opacity: .9; }
+.pcard:hover .pcard__more { opacity: 1; }
+.car__track > .pcard { width: min(85%, 21rem); }
+
+/* ---- Inline pitch figures (Substack flow) ----------------------------- */
+.figure { margin: 1.9rem 0; }
+.figure img {
+  width: 100%; border: 1px solid var(--border); border-radius: 10px;
+  box-shadow: var(--shadow); background: #fff;
+}
+.figure figcaption { margin-top: .55rem; font-size: .82rem; color: var(--faint); text-align: center; }
+.pitch-hero {
+  position: relative; border-radius: 14px; overflow: hidden; margin-bottom: 1.75rem;
+  min-height: 15rem; display: flex; align-items: flex-end; isolation: isolate;
+}
+.pitch-hero__img { position: absolute; inset: 0; background-size: cover; background-position: center; }
+.pitch-hero::after { content:''; position:absolute; inset:0; background: linear-gradient(180deg, rgba(15,10,14,.1), rgba(15,10,14,.7)); }
+.pitch-hero__cap { position: relative; z-index: 2; padding: 1.5rem 1.6rem; color: #fff; }
+
+/* ---- Pitch card grid -------------------------------------------------- */
+.pcard-grid { display: grid; gap: 1.1rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr)); }
+@media (min-width: 40rem) { .pcard-grid { grid-template-columns: repeat(auto-fill, minmax(min(100%, 21rem), 1fr)); } }

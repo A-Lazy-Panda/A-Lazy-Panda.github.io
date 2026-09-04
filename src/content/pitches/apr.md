@@ -8,6 +8,7 @@ recommendation: Long
 thesis: The fastest-growing distributor in a dull, consolidating market where scale is the only edge that lasts, and it is the one taking share.
 status: published
 pdf: /pitches/auto-partner-apr.pdf
+cover: /pitches/img/apr/cover.png
 tags: [auto-parts, distribution, poland, long-short]
 order: 40
 ---
