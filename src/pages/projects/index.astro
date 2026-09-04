@@ -1,0 +1,37 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const projects = (await getCollection('projects'))
+  .sort((a, b) => (b.data.order - a.data.order) || ((b.data.date?.valueOf() ?? 0) - (a.data.date?.valueOf() ?? 0)));
+---
+<Base title="Projects" description="Programming and quantitative projects by Shivansh Pandey.">
+  <div class="article-head">
+    <p class="eyebrow">Code &amp; quant</p>
+    <h1>Projects</h1>
+    <p class="lead">Programming projects, statistical models, and small tools. Mostly Python and R, some of it built while learning.</p>
+  </div>
+
+  {projects.length === 0 ? (
+    <p class="muted">Projects are being written up shortly.</p>
+  ) : (
+    <div class="card-grid">
+      {projects.map((p) => (
+        <div class="card">
+          <div class="card__meta">
+            {p.data.status !== 'live' && <span class="tag">{p.data.status === 'wip' ? 'work in progress' : 'archived'}</span>}
+          </div>
+          <h3>{p.data.title}</h3>
+          <p class="muted small">{p.data.description}</p>
+          <div style="display:flex; flex-wrap:wrap; gap:.4rem; margin-top:.3rem">
+            {p.data.tags.map((t) => <span class="tag">{t}</span>)}
+          </div>
+          <div style="display:flex; gap:.6rem; margin-top:auto; padding-top:.6rem">
+            {p.data.repo && <a class="link small" href={p.data.repo} target="_blank" rel="noopener">Code →</a>}
+            {p.data.url && <a class="link small" href={p.data.url} target="_blank" rel="noopener">Live →</a>}
+          </div>
+        </div>
+      ))}
+    </div>
+  )}
+</Base>

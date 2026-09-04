@@ -1,0 +1,41 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection, render } from 'astro:content';
+
+const items = (await getCollection('dissertations'))
+  .sort((a, b) => (b.data.order - a.data.order) || b.data.year.localeCompare(a.data.year));
+const rendered = await Promise.all(items.map(async (e) => ({ e, Content: (await render(e)).Content })));
+---
+<Base title="Dissertations" description="Long-form and dissertation work by Shivansh Pandey.">
+  <div class="article-head">
+    <p class="eyebrow">Long-form research</p>
+    <h1>Dissertations</h1>
+    <p class="lead">Extended pieces of independent research and dissertation work.</p>
+  </div>
+
+  {rendered.length === 0 ? (
+    <p class="muted">Dissertation write-ups are being added shortly.</p>
+  ) : (
+    <div class="stack" style="--gap:2rem">
+      {rendered.map(({ e, Content }) => (
+        <article class="card" style="padding:1.5rem 1.6rem">
+          <div class="card__meta">
+            <span class="tag">{e.data.level}</span>
+            <span class="faint">{e.data.year}</span>
+            {e.data.grade && <span class="badge">{e.data.grade}</span>}
+          </div>
+          <h2 style="font-size:1.4rem; margin-top:.3rem">{e.data.title}</h2>
+          <div class="prose" style="margin-top:.6rem">
+            <p class="muted"><strong style="color:var(--text)">Abstract.</strong> {e.data.abstract}</p>
+            <Content />
+          </div>
+          {e.data.pdf && (
+            <div style="margin-top:1rem">
+              <a class="btn btn--accent" href={e.data.pdf} target="_blank" rel="noopener">Read the full dissertation (PDF)</a>
+            </div>
+          )}
+        </article>
+      ))}
+    </div>
+  )}
+</Base>

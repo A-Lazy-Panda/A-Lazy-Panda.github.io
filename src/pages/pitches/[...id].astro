@@ -1,0 +1,46 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const pitches = await getCollection('pitches', (p) => p.data.status !== 'draft');
+  return pitches.map((entry) => ({ params: { id: entry.id }, props: { entry } }));
+}
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const d = entry.data;
+const fmt = (x: Date) => x.toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' });
+const badgeClass = (r?: string) => 'badge badge--' + (r ?? 'watch').toLowerCase();
+---
+<Base title={`${d.company} (${d.ticker})`} description={d.thesis}>
+  <p><a class="back-link" href="/pitches">← All pitches</a></p>
+  <div class="article-head">
+    <div class="card__meta" style="font-size:.9rem">
+      <span class="card__ticker" style="font-size:1rem">{d.ticker}</span>
+      {d.exchange && <span class="faint">{d.exchange}</span>}
+      {d.recommendation && <span class={badgeClass(d.recommendation)}>{d.recommendation}</span>}
+      {d.sector && <span class="tag">{d.sector}</span>}
+    </div>
+    <h1>{d.company}</h1>
+    <p class="lead" style="font-size:1.1rem">{d.thesis}</p>
+    <div class="article-meta">
+      <span>{fmt(d.date)}</span>
+      {d.pdf && (<><span class="dot">·</span><a class="link" href={d.pdf} target="_blank" rel="noopener">Download the full pitch (PDF)</a></>)}
+    </div>
+  </div>
+
+  <article class="prose">
+    <Content />
+  </article>
+
+  {d.pdf && (
+    <section style="margin-top:2.5rem">
+      <h2 style="font-size:1.25rem; margin-bottom:.75rem">Full deck</h2>
+      <object class="doc-embed" data={d.pdf} type="application/pdf">
+        <p class="muted">Your browser can't display the PDF inline. <a class="link" href={d.pdf}>Open it here.</a></p>
+      </object>
+    </section>
+  )}
+
+  <p class="faint small" style="margin-top:2.5rem">For information and discussion only. Not investment advice, not a recommendation, and not a solicitation. Figures are tagged [R] reported, [C] calculated, [E] estimate, [U] unverified.</p>
+</Base>

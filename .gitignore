@@ -1,0 +1,16 @@
+# build output
+dist/
+.astro/
+
+# deps
+node_modules/
+
+# os / editor
+.DS_Store
+*.log
+.vscode/
+.idea/
+
+# screenshot helpers (dev only)
+shot.mjs
+shot2.mjs

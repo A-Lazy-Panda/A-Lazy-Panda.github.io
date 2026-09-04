@@ -1,0 +1,52 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const notes = (await getCollection('notes'))
+  .sort((a, b) => (a.data.year.localeCompare(b.data.year)) || (a.data.order - b.data.order) || a.data.paper.localeCompare(b.data.paper));
+
+// group by year
+const byYear = new Map<string, typeof notes>();
+for (const n of notes) {
+  const y = n.data.year;
+  if (!byYear.has(y)) byYear.set(y, [] as any);
+  byYear.get(y)!.push(n);
+}
+const years = Array.from(byYear.keys());
+---
+<Base title="Cambridge notes" description="Economics notes from the Cambridge Tripos by Shivansh Pandey.">
+  <div class="article-head">
+    <p class="eyebrow">Cambridge Economics Tripos</p>
+    <h1>Notes</h1>
+    <p class="lead">My economics notes from Cambridge, organised by year and paper. Shared in the spirit of the notes friends shared with me. Corrections welcome.</p>
+  </div>
+
+  {years.length === 0 ? (
+    <p class="muted">Notes are being uploaded shortly.</p>
+  ) : (
+    years.map((year) => (
+      <section>
+        <div class="section-head"><h2>{year}</h2></div>
+        <div class="rows">
+          {byYear.get(year)!.map((n) => (
+            <div class="row" style="align-items:flex-start">
+              <div style="flex:1 1 20rem">
+                <div class="row__title">{n.data.paper}</div>
+                {n.data.description && <p class="row__desc" style="flex-basis:auto; margin-top:.25rem">{n.data.description}</p>}
+              </div>
+              <div style="display:flex; flex-wrap:wrap; gap:.5rem; margin-left:auto; align-items:center">
+                {n.data.files.length === 0 ? (
+                  <span class="faint small">coming soon</span>
+                ) : (
+                  n.data.files.map((f) => (
+                    <a class="btn" href={f.href} target="_blank" rel="noopener">{f.label}</a>
+                  ))
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+    ))
+  )}
+</Base>

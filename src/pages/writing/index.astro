@@ -1,0 +1,49 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('writing', (p) => !p.data.draft))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const cats = ['All', ...Array.from(new Set(posts.map((p) => p.data.category)))];
+const fmt = (d: Date) => d.toLocaleDateString('en-GB', { year: 'numeric', month: 'short', day: 'numeric' });
+---
+<Base title="Writing" description="Essays and notes on investing and education by Shivansh Pandey.">
+  <div class="article-head">
+    <p class="eyebrow">Notebook</p>
+    <h1>Writing</h1>
+    <p class="lead">Two threads: an investment blog (companies, markets, method) and an education blog (economics and statistics, explained the way I wish they'd been explained to me).</p>
+  </div>
+
+  <div class="filters" role="group" aria-label="Filter by category">
+    {cats.map((c) => (
+      <button class="filter-btn" data-cat={c} aria-pressed={c === 'All' ? 'true' : 'false'}>{c}</button>
+    ))}
+  </div>
+
+  {posts.length === 0 ? (
+    <p class="muted">First posts are on the way.</p>
+  ) : (
+    <div class="rows" id="post-list">
+      {posts.map((p) => (
+        <div class="row" data-cat={p.data.category}>
+          <a class="row__title" href={`/writing/${p.id}`}>{p.data.title}</a>
+          <span class="row__date">{p.data.category} · {fmt(p.data.date)}</span>
+          <p class="row__desc">{p.data.description}</p>
+        </div>
+      ))}
+    </div>
+  )}
+</Base>
+<script is:inline>
+  (() => {
+    const btns = document.querySelectorAll('.filter-btn');
+    const rows = document.querySelectorAll('#post-list .row');
+    btns.forEach((b) => b.addEventListener('click', () => {
+      const cat = b.getAttribute('data-cat');
+      btns.forEach((x) => x.setAttribute('aria-pressed', x === b ? 'true' : 'false'));
+      rows.forEach((r) => {
+        r.hidden = !(cat === 'All' || r.getAttribute('data-cat') === cat);
+      });
+    }));
+  })();
+</script>

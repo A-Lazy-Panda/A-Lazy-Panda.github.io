@@ -1,0 +1,36 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const pitches = (await getCollection('pitches', (p) => p.data.status !== 'draft'))
+  .sort((a, b) => (b.data.order - a.data.order) || (b.data.date.valueOf() - a.data.date.valueOf()));
+const fmt = (d: Date) => d.toLocaleDateString('en-GB', { year: 'numeric', month: 'short' });
+const badgeClass = (r?: string) => 'badge badge--' + (r ?? 'watch').toLowerCase();
+---
+<Base title="Stock pitches" description="Equity research and stock pitches by Shivansh Pandey.">
+  <div class="article-head">
+    <p class="eyebrow">Equity research</p>
+    <h1>Stock pitches</h1>
+    <p class="lead">Long and short ideas I've worked up, with the thesis, the numbers, and what would have to be true. Figures carry provenance tags; nothing here is investment advice.</p>
+  </div>
+
+  {pitches.length === 0 ? (
+    <p class="muted">Pitches are being published shortly.</p>
+  ) : (
+    <div class="card-grid">
+      {pitches.map((p) => (
+        <a class="card" href={`/pitches/${p.id}`}>
+          <div class="card__meta">
+            <span class="card__ticker">{p.data.ticker}</span>
+            {p.data.exchange && <span class="faint">{p.data.exchange}</span>}
+            {p.data.recommendation && <span class={badgeClass(p.data.recommendation)}>{p.data.recommendation}</span>}
+            <span style="margin-left:auto">{fmt(p.data.date)}</span>
+          </div>
+          <h3>{p.data.company}</h3>
+          <p class="muted small">{p.data.thesis}</p>
+          {p.data.sector && <div style="margin-top:auto"><span class="tag">{p.data.sector}</span></div>}
+        </a>
+      ))}
+    </div>
+  )}
+</Base>

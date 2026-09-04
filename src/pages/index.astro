@@ -1,0 +1,88 @@
+---
+import Base from '../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+import { SITE, SOCIALS } from '../consts';
+
+const pitches = (await getCollection('pitches', (p) => p.data.status !== 'draft'))
+  .sort((a, b) => (b.data.order - a.data.order) || (b.data.date.valueOf() - a.data.date.valueOf()))
+  .slice(0, 5);
+
+const writing = (await getCollection('writing', (p) => !p.data.draft))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 4);
+
+const fmt = (d: Date) => d.toLocaleDateString('en-GB', { year: 'numeric', month: 'short' });
+const badgeClass = (r?: string) => 'badge badge--' + (r ?? 'watch').toLowerCase();
+---
+<Base>
+  <section class="hero">
+    <p class="eyebrow">Shivansh Pandey</p>
+    <h1>Economics, statistics,<br />and equity research.</h1>
+    <p class="lead">
+      I read Economics at Gonville &amp; Caius College, Cambridge, and I'm about to
+      begin an MSc in Statistics at LSE. My interests sit where markets meet method:
+      machine learning, quantamental investing, and the discipline of getting the
+      numbers right.
+    </p>
+    <div style="display:flex; flex-wrap:wrap; gap:.6rem; margin-top:.4rem">
+      <a class="btn btn--accent" href="/pitches">Stock pitches</a>
+      <a class="btn" href="/notes">Cambridge notes</a>
+      <a class="btn" href="/writing">Writing</a>
+    </div>
+    <p class="muted small" style="margin-top:.4rem">
+      <strong style="color:var(--text)">Currently</strong>
+      &nbsp;·&nbsp; MSc Statistics, LSE (from Sep 2026)
+      <span class="dot">·</span> previously equity research (Software &amp; Cloud), Rothschild &amp; Co Redburn
+    </p>
+  </section>
+
+  {pitches.length > 0 && (
+    <section>
+      <div class="section-head">
+        <h2>Selected pitches</h2>
+        <a class="more" href="/pitches">All pitches →</a>
+      </div>
+      <div class="card-grid">
+        {pitches.map((p) => (
+          <a class="card" href={`/pitches/${p.id}`}>
+            <div class="card__meta">
+              <span class="card__ticker">{p.data.ticker}</span>
+              {p.data.recommendation && <span class={badgeClass(p.data.recommendation)}>{p.data.recommendation}</span>}
+              <span style="margin-left:auto">{fmt(p.data.date)}</span>
+            </div>
+            <h3>{p.data.company}</h3>
+            <p class="muted small">{p.data.thesis}</p>
+          </a>
+        ))}
+      </div>
+    </section>
+  )}
+
+  {writing.length > 0 && (
+    <section>
+      <div class="section-head">
+        <h2>Recent writing</h2>
+        <a class="more" href="/writing">All writing →</a>
+      </div>
+      <div class="rows">
+        {writing.map((w) => (
+          <div class="row">
+            <a class="row__title" href={`/writing/${w.id}`}>{w.data.title}</a>
+            <span class="row__date">{w.data.category} · {fmt(w.data.date)}</span>
+            <p class="row__desc">{w.data.description}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+  )}
+
+  <section>
+    <div class="section-head"><h2>Elsewhere</h2></div>
+    <p class="muted">
+      Reach me at <a class="link" href={`mailto:${SITE.email}`}>{SITE.email}</a>.
+      {SOCIALS.filter((s) => s.href.startsWith('http')).map((s) => (
+        <> <span class="dot">·</span> <a class="link" href={s.href} target="_blank" rel="me noopener">{s.label}</a></>
+      ))}
+    </p>
+  </section>
+</Base>
