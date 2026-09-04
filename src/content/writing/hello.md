@@ -2,19 +2,17 @@
 title: Why this site exists
 date: 2026-09-04
 category: Other
-description: A home for my notes, pitches and writing — and a short note on the two threads I want to keep here.
+description: Somewhere to keep the notes, pitches and writing in one place, and a note on the two things I want to write about here.
 draft: false
 tags: [meta]
 ---
 
-*A starter post — edit or replace it in `src/content/writing/`.*
+I made this because the things I actually build were scattered across folders where they did no work: Cambridge notes in one place, stock pitches in another, a dissertation somewhere else. Put together in one spot, they are a record I can point at and keep adding to.
 
-I wanted one place that holds the things I actually make: my Cambridge economics notes, the stock pitches I've worked up, the dissertation, and the code behind it. Scattered across folders, none of it does any work. Collected, it's a record I can point to and keep adding to.
+Two things will live here.
 
-Two threads will live here.
+One is investing. Companies I have looked at, where I think the numbers and the price disagree, and the occasional post-mortem when a call goes wrong. I would rather be right than interesting, so the figures come with a source and every thesis says what would prove it wrong.
 
-An **investing** thread: companies I've looked at, what the numbers say versus what the market is pricing, and the occasional post-mortem on a call. I care more about being right than being interesting, so expect provenance on the figures and a clear statement of what would break each thesis.
+The other is teaching, mostly economics and statistics, written the way I wish someone had written it for me the first time round. Short, worked through, and honest about the bits that are genuinely hard.
 
-An **education** thread: economics and statistics explained the way I wish they'd been explained to me the first time. Short, worked, and honest about what's hard.
-
-That's the whole plan. More soon.
+That is the whole plan. More soon.

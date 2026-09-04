@@ -1,11 +1,11 @@
 ---
 import Base from '../layouts/Base.astro';
+import Carousel from '../components/Carousel.astro';
 import { getCollection } from 'astro:content';
 import { SITE, SOCIALS } from '../consts';
 
 const pitches = (await getCollection('pitches', (p) => p.data.status !== 'draft'))
-  .sort((a, b) => (b.data.order - a.data.order) || (b.data.date.valueOf() - a.data.date.valueOf()))
-  .slice(0, 5);
+  .sort((a, b) => (b.data.order - a.data.order) || (b.data.date.valueOf() - a.data.date.valueOf()));
 
 const writing = (await getCollection('writing', (p) => !p.data.draft))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
@@ -19,10 +19,11 @@ const badgeClass = (r?: string) => 'badge badge--' + (r ?? 'watch').toLowerCase(
     <p class="eyebrow">Shivansh Pandey</p>
     <h1>Economics, statistics,<br />and equity research.</h1>
     <p class="lead">
-      I read Economics at Gonville &amp; Caius College, Cambridge, and I'm about to
-      begin an MSc in Statistics at LSE. My interests sit where markets meet method:
-      machine learning, quantamental investing, and the discipline of getting the
-      numbers right.
+      I read Economics at Gonville &amp; Caius, Cambridge, and I am starting an M.S.
+      in Statistics at LSE this autumn. I like the part of finance where a view has
+      to survive contact with the numbers, so most of what I keep here is that:
+      stock pitches, my Cambridge notes, some code, and the occasional argument
+      with myself in writing.
     </p>
     <div style="display:flex; flex-wrap:wrap; gap:.6rem; margin-top:.4rem">
       <a class="btn btn--accent" href="/pitches">Stock pitches</a>
@@ -31,31 +32,40 @@ const badgeClass = (r?: string) => 'badge badge--' + (r ?? 'watch').toLowerCase(
     </div>
     <p class="muted small" style="margin-top:.4rem">
       <strong style="color:var(--text)">Currently</strong>
-      &nbsp;·&nbsp; MSc Statistics, LSE (from Sep 2026)
-      <span class="dot">·</span> previously equity research (Software &amp; Cloud), Rothschild &amp; Co Redburn
+      &nbsp;·&nbsp; M.S. Statistics, LSE (from autumn 2026)
+      <span class="dot">·</span> last summer, equity research at Rothschild &amp; Co / Redburn Atlantic
+    </p>
+  </section>
+
+  <section>
+    <p class="prose" style="max-width:var(--measure)">
+      At Cambridge I finished with a first, and 84% in my final year. The faculty
+      gave my dissertation its prize for the best piece of econometrics that year:
+      it looked at the UK's superfast broadband subsidies and found a "copper trap",
+      where the subsidy that fixed one problem quietly held the next technology back.
+      Most of my time since has gone on markets. I spent last summer on Rothschild
+      &amp; Co / Redburn Atlantic's software and cloud desk, building the JFrog and
+      Garmin models from scratch and a live tracker of the datacentre build-out
+      worldwide; before that a $500m software acquisition at Bending Spoons, and
+      infrastructure valuations at EY-Parthenon. The habit is the same each time:
+      build the thing bottom-up, then argue with it.
     </p>
   </section>
 
   {pitches.length > 0 && (
-    <section>
-      <div class="section-head">
-        <h2>Selected pitches</h2>
-        <a class="more" href="/pitches">All pitches →</a>
-      </div>
-      <div class="card-grid">
-        {pitches.map((p) => (
-          <a class="card" href={`/pitches/${p.id}`}>
-            <div class="card__meta">
-              <span class="card__ticker">{p.data.ticker}</span>
-              {p.data.recommendation && <span class={badgeClass(p.data.recommendation)}>{p.data.recommendation}</span>}
-              <span style="margin-left:auto">{fmt(p.data.date)}</span>
-            </div>
-            <h3>{p.data.company}</h3>
-            <p class="muted small">{p.data.thesis}</p>
-          </a>
-        ))}
-      </div>
-    </section>
+    <Carousel title="Selected pitches" moreHref="/pitches" moreLabel="All pitches">
+      {pitches.map((p) => (
+        <a class="card" href={`/pitches/${p.id}`}>
+          <div class="card__meta">
+            <span class="card__ticker">{p.data.ticker}</span>
+            {p.data.recommendation && <span class={badgeClass(p.data.recommendation)}>{p.data.recommendation}</span>}
+            <span style="margin-left:auto">{fmt(p.data.date)}</span>
+          </div>
+          <h3>{p.data.company}</h3>
+          <p class="muted small">{p.data.thesis}</p>
+        </a>
+      ))}
+    </Carousel>
   )}
 
   {writing.length > 0 && (
@@ -78,11 +88,21 @@ const badgeClass = (r?: string) => 'badge badge--' + (r ?? 'watch').toLowerCase(
 
   <section>
     <div class="section-head"><h2>Elsewhere</h2></div>
-    <p class="muted">
-      Reach me at <a class="link" href={`mailto:${SITE.email}`}>{SITE.email}</a>.
-      {SOCIALS.filter((s) => s.href.startsWith('http')).map((s) => (
-        <> <span class="dot">·</span> <a class="link" href={s.href} target="_blank" rel="me noopener">{s.label}</a></>
-      ))}
-    </p>
+    <div style="display:grid; grid-template-columns: 1fr auto; gap:1.5rem; align-items:start">
+      <p class="muted">
+        Reach me at <a class="link" href={`mailto:${SITE.email}`}>{SITE.email}</a>.
+        {SOCIALS.filter((s) => s.href.startsWith('http')).map((s) => (
+          <> <span class="dot">·</span> <a class="link" href={s.href} target="_blank" rel="me noopener">{s.label}</a></>
+        ))}
+        <br /><br />
+        Corrections on anything here are welcome, especially on the notes and the numbers.
+      </p>
+      <div class="li-badge">
+        <div class="badge-base LI-profile-badge" data-locale="en_US" data-size="medium" data-theme="light" data-type="VERTICAL" data-vanity="shivansh-pandey-uk" data-version="v1">
+          <a class="badge-base__link LI-simple-link" href="https://uk.linkedin.com/in/shivansh-pandey-uk?trk=profile-badge">Shivansh P.</a>
+        </div>
+      </div>
+    </div>
   </section>
+  <script is:inline src="https://platform.linkedin.com/badges/js/profile.js" async defer type="text/javascript"></script>
 </Base>

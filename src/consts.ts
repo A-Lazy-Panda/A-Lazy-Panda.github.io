@@ -5,15 +5,15 @@ export const SITE = {
   title: 'Shivansh Pandey',
   tagline: 'Economics, statistics, and equity research.',
   description:
-    'Personal site of Shivansh Pandey — Cambridge Economics, MSc Statistics at LSE. Cambridge economics notes, equity research and stock pitches, writing on investing and education, programming projects, and dissertations.',
+    'Shivansh Pandey — B.A. Economics, Cambridge and M.S. Statistics, LSE. My Cambridge economics notes, the stock pitches I have worked up, writing on investing and how to think about it, some code, and my dissertation.',
   email: 'shivanshpandeyuk@gmail.com',
   url: 'https://a-lazy-panda.github.io',
 } as const;
 
 export const SOCIALS: { label: string; href: string }[] = [
   { label: 'Email', href: 'mailto:shivanshpandeyuk@gmail.com' },
-  { label: 'GitHub', href: 'https://github.com/A-Lazy-Panda' },      // TODO: set your GitHub URL
-  { label: 'LinkedIn', href: 'https://www.linkedin.com/' }, // TODO: set your LinkedIn URL
+  { label: 'GitHub', href: 'https://github.com/A-Lazy-Panda' },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/shivansh-pandey-uk/' },
 ];
 
 // Primary navigation.
@@ -23,5 +23,5 @@ export const NAV: { label: string; href: string }[] = [
   { label: 'Pitches', href: '/pitches' },
   { label: 'Writing', href: '/writing' },
   { label: 'Projects', href: '/projects' },
-  { label: 'Dissertations', href: '/dissertations' },
+  { label: 'Dissertation', href: '/dissertations' },
 ];

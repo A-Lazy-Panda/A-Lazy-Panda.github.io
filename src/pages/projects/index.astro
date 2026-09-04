@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import Carousel from '../../components/Carousel.astro';
 import { getCollection } from 'astro:content';
 
 const projects = (await getCollection('projects'))
@@ -9,13 +10,13 @@ const projects = (await getCollection('projects'))
   <div class="article-head">
     <p class="eyebrow">Code &amp; quant</p>
     <h1>Projects</h1>
-    <p class="lead">Programming projects, statistical models, and small tools. Mostly Python and R, some of it built while learning.</p>
+    <p class="lead">Programming and statistics, mostly R and Python, some of it built while learning.</p>
   </div>
 
   {projects.length === 0 ? (
     <p class="muted">Projects are being written up shortly.</p>
   ) : (
-    <div class="card-grid">
+    <Carousel title="Selected work">
       {projects.map((p) => (
         <div class="card">
           <div class="card__meta">
@@ -32,6 +33,6 @@ const projects = (await getCollection('projects'))
           </div>
         </div>
       ))}
-    </div>
+    </Carousel>
   )}
 </Base>

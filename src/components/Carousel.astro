@@ -1,0 +1,69 @@
+---
+// Lightweight scroll-snap carousel. No dependencies.
+// Adapted from a shadcn/embla "Gallery4" pattern into the site's own stack:
+// arrows top-right, dot indicators below, drag/scroll on touch.
+interface Props {
+  title: string;
+  moreHref?: string;
+  moreLabel?: string;
+  id?: string;
+}
+const { title, moreHref, moreLabel = 'View all', id } = Astro.props;
+const cid = id ?? 'car-' + Math.random().toString(36).slice(2, 8);
+---
+<section class="car" data-car>
+  <div class="section-head">
+    <h2>{title}</h2>
+    <div class="car__nav">
+      <button class="car__btn" data-prev aria-label="Previous" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <button class="car__btn" data-next aria-label="Next" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+      </button>
+      {moreHref && <a class="more" href={moreHref}>{moreLabel} →</a>}
+    </div>
+  </div>
+  <div class="car__track" data-track id={cid}>
+    <slot />
+  </div>
+  <div class="car__dots" data-dots aria-hidden="true"></div>
+</section>
+<script>
+  (() => {
+    const init = (root) => {
+      const track = root.querySelector('[data-track]');
+      const prev = root.querySelector('[data-prev]');
+      const next = root.querySelector('[data-next]');
+      const dots = root.querySelector('[data-dots]');
+      if (!track) return;
+      const cards = Array.from(track.children);
+      const step = () => {
+        const a = cards[0], b = cards[1];
+        if (!a) return track.clientWidth;
+        return b ? b.getBoundingClientRect().left - a.getBoundingClientRect().left : a.getBoundingClientRect().width;
+      };
+      // dots
+      cards.forEach((_, i) => {
+        const d = document.createElement('button');
+        d.className = 'car__dot';
+        d.type = 'button';
+        d.setAttribute('aria-label', 'Go to item ' + (i + 1));
+        d.addEventListener('click', () => track.scrollTo({ left: i * step(), behavior: 'smooth' }));
+        dots.appendChild(d);
+      });
+      const update = () => {
+        const i = Math.round(track.scrollLeft / step());
+        Array.from(dots.children).forEach((d, n) => d.setAttribute('aria-current', n === i ? 'true' : 'false'));
+        if (prev) prev.disabled = track.scrollLeft <= 4;
+        if (next) next.disabled = track.scrollLeft >= track.scrollWidth - track.clientWidth - 4;
+      };
+      prev && prev.addEventListener('click', () => track.scrollBy({ left: -step(), behavior: 'smooth' }));
+      next && next.addEventListener('click', () => track.scrollBy({ left: step(), behavior: 'smooth' }));
+      track.addEventListener('scroll', () => window.requestAnimationFrame(update), { passive: true });
+      window.addEventListener('resize', update);
+      update();
+    };
+    document.querySelectorAll('[data-car]').forEach(init);
+  })();
+</script>

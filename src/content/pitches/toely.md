@@ -5,31 +5,21 @@ exchange: TSE 8035 (ADR TOELY)
 sector: Semiconductor equipment
 date: 2024-12-01
 recommendation: Long
-thesis: A monopoly R&D compounder in wafer-fab equipment — near-total share of coater/developer, low China risk, no debt, and a management that has learned not to under-invest.
+thesis: A near-monopoly in coater/developer that defends itself by out-spending on R&D, with no debt, low China risk, and a management that has learned not to under-invest.
 status: published
 pdf: /pitches/tokyo-electron-toely.pdf
-tags: [semiconductors, wfe, japan, r-and-d-moat]
+tags: [semiconductors, wfe, japan, r-and-d]
 order: 20
 ---
 
-*Solo write-up, December 2024. Company facts are as stated in the pitch; verify against current filings.*
+*My own write-up, December 2024. Company facts are as stated in the pitch; check them against current filings.*
 
-## Thesis
+Long Tokyo Electron, through the ADR (TOELY) or the less liquid OTC line. It is one of the five big makers of wafer-fab equipment, and the only one that builds tools for all four of the key front-end steps. In its core niche it holds about **90% of the coater/developer market and 100% of high-NA [R]**. Each of the big five owns a different step of the process and defends it the same way, by spending more on capex and R&D than a challenger can afford to match.
 
-Tokyo Electron (TEL) is one of the five big wafer-fab-equipment (WFE) makers, and the only one producing equipment across all four key wafer front-end processes. It holds **~90% of the coater/developer market and 100% of high-NA [R]**. The business is a monopoly-by-niche R&D compounder: each of the big five owns a distinct step of the process, and defends it by out-spending on capex and R&D. Buy the ADR (**TOELY**), or the OTC line for the less liquid route.
+What keeps the position is accumulated know-how, and Tokyo Electron keeps it in the building: employee retention runs at about **92% [R]**, and it hires expertise out of competitors rather than losing its own. R&D that works pays for the next generation of tools, which widens the niche again. The move to a "shift-left" approach, bringing customers into testing earlier, has made that spend more effective, and let the company push into neighbouring markets like etching. The balance sheet backs it up: **no debt, a steady ~50% payout, and relatively low China exposure [R]** for the industry.
 
-## Why the moat holds
+There is a reason to want the whole sector too. Over three, five, ten and fifteen years, semis, semi-cap equipment and EDA have beaten the market, they sit in the middle of everything in tech, and their margins and cash generation have structurally improved. Tokyo Electron is a way to own that with a near-monopoly attached.
 
-Building competitive WFE requires accumulated, hard-to-replicate know-how; TEL's **~92% employee retention [R]** keeps that expertise in-house — it even poaches from competitors. The self-reinforcing loop is the point: R&D success funds the next generation of tools, which widens the niche. TEL's adoption of a **"shift-left"** approach — bringing customers into earlier testing phases — has improved not just the magnitude but the *efficacy* of its R&D, letting it penetrate ancillary markets like etching.
-
-Balance sheet and shareholder terms are clean: **no debt, a consistent ~50% dividend payout [R]**, and **relatively low China exposure** versus the industry.
-
-## Why the sector
-
-For a long-term investor, semis, semi-cap equipment and EDA have outperformed across 3/5/10/15-year horizons, sit at the centre of the technology value chain, and have structurally improved profitability and free cash flow. TEL is a way to own the "picks and shovels" with a monopoly attached.
-
-## What would break it
-
-The 1980s cautionary tale — TEL under-invested in a downturn and Korean entrants took share. Management says capex and R&D are set to roughly double over the prior five years precisely to avoid repeating it. The thesis breaks if that investment lapses, if a process-node transition bypasses TEL's niche, or if China risk proves higher than the low reported exposure suggests.
+The company has been here before and got it wrong. In the 1980s it under-invested in a downturn, and Korean entrants took share. Management says capex and R&D are set to roughly double over the previous five years to avoid a repeat. That is the thing to watch: if the investment lapses, or a process-node shift routes around its niche, or China risk turns out higher than the low reported number, the case breaks.
 
 Full deck below.
