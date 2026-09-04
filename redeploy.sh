@@ -8,6 +8,8 @@ cd dist
 touch .nojekyll
 rm -rf .git
 git init -q && git checkout -q -b gh-pages
+git config user.name 'Shivansh Pandey'
+git config user.email 'shivanshpandeyuk@gmail.com'
 git add -A && git commit -q -m "Deploy $(date +%F_%H:%M)"
 git push -f https://github.com/A-Lazy-Panda/a-lazy-panda.github.io.git gh-pages
 echo "Live: https://a-lazy-panda.github.io"
